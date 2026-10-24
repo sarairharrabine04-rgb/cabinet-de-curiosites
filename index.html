@@ -24,8 +24,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            overflow: hidden;
+            padding: 15px;
+            overflow-x: hidden;
         }
 
         .medaillon-container {
@@ -60,7 +60,7 @@
         .content-overlay {
             position: absolute;
             text-align: center;
-            width: 55%;
+            width: 65%;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -93,14 +93,14 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #554b4d;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         /* Liens de navigation */
         .nav-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             font-family: 'Special Elite', cursive;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -118,6 +118,37 @@
             color: #3d0c14;
             letter-spacing: 2px;
             border-bottom: 1px solid #3d0c14;
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 600px) {
+            .content-overlay {
+                width: 75%;
+                padding: 5px;
+            }
+
+            .top-subtitle {
+                font-size: 0.55rem;
+                letter-spacing: 1px;
+                margin-bottom: 2px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+                margin-bottom: 2px;
+            }
+
+            .bottom-subtitle {
+                font-size: 0.55rem;
+                letter-spacing: 1px;
+                margin-bottom: 10px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 0.65rem;
+            }
         }
 
         /* --- ANIMATIONS --- */

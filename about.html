@@ -23,8 +23,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            overflow: hidden;
+            padding: 15px;
+            overflow-x: hidden;
         }
 
         /* Conteneur principal avec lévitation */
@@ -112,8 +112,36 @@
             animation: fadeInUp 1s ease 1.3s forwards, pulseHearts 3s ease-in-out infinite 2.3s;
         }
 
-        /* --- ANIMATIONS --- */
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 600px) {
+            .about-card {
+                padding: 35px 20px;
+            }
 
+            .floating-swan {
+                width: 80px;
+                top: -30px;
+                right: -15px;
+            }
+
+            h1 {
+                font-size: 2.3rem;
+                margin-bottom: 15px;
+            }
+
+            .about-text {
+                font-size: 0.75rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            .back-link {
+                font-size: 0.7rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* --- ANIMATIONS --- */
         @keyframes cardEntrance {
             0% {
                 opacity: 0;
