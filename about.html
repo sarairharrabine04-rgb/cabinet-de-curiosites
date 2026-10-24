@@ -24,19 +24,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
-            overflow-x: hidden;
+            padding: 20px;
+            overflow: hidden;
         }
 
-        /* Conteneur principal avec lévitation */
+        /* Conteneur principal avec lévitation (sans barres de défilement) */
         .about-card {
             background-color: #f4efe6;
             color: #1a1617;
-            width: 650px;
+            width: 720px;
             max-width: 95vw;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 40px 30px;
+            padding: 55px 45px;
             text-align: center;
             position: relative;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
@@ -45,12 +43,12 @@
             animation: cardEntrance 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, floatCard 6s ease-in-out infinite 1.5s;
         }
 
-        /* Le cygne majestueux en haut à droite de la feuille */
+        /* Le cygne majestueux parfaitement positionné */
         .floating-swan {
             position: absolute;
-            top: -35px;
-            right: -25px;
-            width: 90px;
+            top: -45px;
+            right: -35px;
+            width: 110px;
             height: auto;
             pointer-events: none;
             filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.6));
@@ -61,13 +59,13 @@
         /* Lien de retour */
         .back-link {
             font-family: 'Special Elite', cursive;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #554b4d;
             text-decoration: none;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-bottom: 1px solid transparent;
             transition: all 0.3s ease;
             opacity: 0;
@@ -84,10 +82,10 @@
             font-family: 'Playfair Display', serif;
             font-weight: 400;
             font-style: italic;
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: 3.2rem;
             color: #1a1617;
             letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             opacity: 0;
             animation: fadeInUp 1s ease 0.7s forwards;
         }
@@ -95,11 +93,11 @@
         /* Texte du cabinet de curiosités */
         .about-text {
             font-family: 'Special Elite', cursive;
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
-            line-height: 1.7;
+            font-size: 0.88rem;
+            line-height: 1.8;
             color: #4a4042;
-            max-width: 500px;
-            margin: 0 auto 20px auto;
+            max-width: 530px;
+            margin: 0 auto 25px auto;
             text-align: center;
             opacity: 0;
             animation: fadeInUp 1s ease 1s forwards;
@@ -109,10 +107,39 @@
         .hearts {
             color: #554b4d;
             letter-spacing: 5px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-top: 15px;
             opacity: 0;
             animation: fadeInUp 1s ease 1.3s forwards, pulseHearts 3s ease-in-out infinite 2.3s;
+        }
+
+        /* Ajustements mobiles */
+        @media (max-width: 600px) {
+            .about-card {
+                padding: 35px 20px;
+            }
+
+            .floating-swan {
+                width: 80px;
+                top: -30px;
+                right: -15px;
+            }
+
+            h1 {
+                font-size: 2.3rem;
+                margin-bottom: 15px;
+            }
+
+            .about-text {
+                font-size: 0.75rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+
+            .back-link {
+                font-size: 0.7rem;
+                margin-bottom: 20px;
+            }
         }
 
         /* --- ANIMATIONS --- */
