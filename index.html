@@ -95,7 +95,7 @@
         }
 
 
-        /* TEXTE À L'INTÉRIEUR DU MÉDAILLON */
+        /* TEXTE DU MÉDAILLON */
 
         .content-overlay {
             position: absolute;
@@ -204,7 +204,7 @@
         }
 
 
-        /* TÉLÉPHONES ET TABLETTES */
+        /* ADAPTATION MOBILE */
 
         @media (max-width: 768px) {
 
@@ -214,26 +214,33 @@
             }
 
             .content-overlay {
+                width: 50%;
+                padding: 0;
+
                 top: 50%;
                 left: 50%;
 
                 transform: translate(-50%, -50%);
-
-                /*
-                   Zone de texte réduite pour rester
-                   à l'intérieur de l'ovale blanc.
-                */
-
-                width: 50%;
-                padding: 0;
             }
 
-            .top-subtitle {
-                font-size: clamp(0.38rem, 1.8vw, 0.55rem);
+            /*
+               Le sous-titre est légèrement descendu
+               pour mieux le positionner dans l'ovale.
+            */
 
+            .top-subtitle {
+                position: relative;
+                top: 5px;
+
+                font-size: clamp(0.38rem, 1.8vw, 0.55rem);
                 letter-spacing: 0;
 
-                margin-bottom: 5px;
+                margin-bottom: 8px;
+
+                color: #554b4d;
+                text-decoration: underline;
+
+                white-space: nowrap;
             }
 
             h1 {
@@ -284,20 +291,25 @@
             }
 
             .top-subtitle {
+                top: 4px;
+
                 font-size: 0.36rem;
                 letter-spacing: 0;
-                margin-bottom: 4px;
+
+                margin-bottom: 7px;
             }
 
             h1 {
                 font-size: 1.65rem;
                 letter-spacing: 0;
+
                 margin-bottom: 4px;
             }
 
             .bottom-subtitle {
                 font-size: 0.42rem;
                 letter-spacing: 0.5px;
+
                 margin-bottom: 8px;
             }
 
@@ -325,8 +337,10 @@
             }
 
             .top-subtitle {
+                top: 2px;
+
                 font-size: 0.48rem;
-                margin-bottom: 3px;
+                margin-bottom: 5px;
             }
 
             h1 {
