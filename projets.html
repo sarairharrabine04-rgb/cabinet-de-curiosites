@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASS — Projets 3D</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #2c080c;
+            background-image: radial-gradient(circle, #3d0c14 0%, #2c080c 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 15px 60px 15px;
+            color: #1a1617;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInDown 1s ease 0.3s forwards;
+        }
+
+        .back-link {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #d4cfc4;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-style: italic;
+            font-size: 2.8rem;
+            color: #f4efe6;
+            letter-spacing: 2px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .category-title {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: #d4cfc4;
+            text-transform: uppercase;
+            margin: 40px 0 20px 0;
+            border-bottom: 1px dashed #554b4d;
+            padding-bottom: 8px;
+            width: 100%;
+            max-width: 1100px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            max-width: 1100px;
+            width: 100%;
+            justify-items: center;
+        }
+
+        @media (max-width: 950px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-container {
+            width: 300px;
+            max-width: 100%;
+            height: 420px;
+            perspective: 1000px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, floatCard 6s ease-in-out infinite;
+        }
+
+        .card-container:nth-child(1) {
+            animation-delay: 0.2s, 0s;
+        }
+
+        .card-container:nth-child(2) {
+            animation-delay: 0.4s, 1s;
+        }
+
+        .card-container:nth-child(3) {
+            animation-delay: 0.6s, 2s;
+        }
+
+        .card-container:nth-child(4) {
+            animation-delay: 0.8s, 1.5s;
+        }
+
+        .card-container:nth-child(5) {
+            animation-delay: 1s, 0.5s;
+        }
+
+        .card-container:nth-child(6) {
+            animation-delay: 1.2s, 2.5s;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 6px;
+        }
+
+        .card-container.flipped .card {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 22px;
+            background-color: #f4efe6;
+            border: 2px solid #d4cfc4;
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0, 0, 0, 0.02) 15px, rgba(0, 0, 0, 0.02) 18px);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-container:hover .card-face {
+            border-color: #1a1617;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #1a1617;
+            color: #f4efe6;
+            border: 2px solid #554b4d;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .card-header {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #554b4d;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-style: italic;
+            text-align: center;
+            margin: 8px 0;
+            color: #1a1617;
+        }
+
+        .card-image-box {
+            width: 100%;
+            height: 175px;
+            background-color: #000;
+            border: 1px solid #d4cfc4;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(105%);
+            transition: transform 0.5s ease;
+        }
+
+        .card-container:hover .card-image-box img {
+            transform: scale(1.06);
+        }
+
+        .zoom-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(44, 8, 12, 0.85);
+            color: #f4efe6;
+            font-family: 'Special Elite', cursive;
+            font-size: 0.7rem;
+            padding: 6px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            border: 1px solid #d4cfc4;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+
+        .zoom-btn:hover {
+            background: #3d0c14;
+        }
+
+        .zoom-avatar {
+            transform: scale(1.4);
+            object-position: center 30%;
+        }
+
+        .zoom-sword {
+            transform: scale(1.3);
+        }
+
+        .zoom-cake {
+            transform: scale(1.2);
+        }
+
+        .card-footer {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.65rem;
+            text-align: center;
+            color: #554b4d;
+            letter-spacing: 1px;
+        }
+
+        .card-back h3 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            color: #f4efe6;
+        }
+
+        .card-back p {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: #d4cfc4;
+        }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 8, 12, 0.96);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 95%;
+            max-height: 80vh;
+            border: 3px solid #d4cfc4;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+            object-fit: contain;
+            animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #lightbox .close-hint {
+            font-family: 'Special Elite', cursive;
+            color: #d4cfc4;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        .atelier-btn-container {
+            margin-top: 50px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.4s forwards;
+        }
+
+        .atelier-link-btn {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #1a1617;
+            background-color: #f4efe6;
+            padding: 14px 28px;
+            text-decoration: none;
+            border: 2px solid #d4cfc4;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .atelier-link-btn:hover {
+            background-color: #d4cfc4;
+            letter-spacing: 5px;
+            transform: translateY(-3px);
+        }
+
+        @keyframes floatCard {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.9;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-container">
+        <a href="index.html" class="back-link">← Retour au cabinet</a>
+        <h1>Cabinet de Curiosités 3D</h1>
+    </div>
+
+    <!-- ================= FINI ================= -->
+    <div class="category-title">— Fini —</div>
+    <div class="cards-grid">
+        <!-- Gâteau-Fontaine -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact I</div>
+                    <div>
+                        <h2 class="card-title">Gâteau-Fontaine</h2>
+                        <div class="card-image-box">
+                            <img src="image0.jpeg" alt="Gâteau" class="zoom-cake">
+                            <button class="zoom-btn" onclick="openLightbox('image0.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Modélisation féérique sous Blender, textures texturées et cascade de glaçage.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pokéballs -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact II</div>
+                    <div>
+                        <h2 class="card-title">Pokéballs Studio</h2>
+                        <div class="card-image-box">
+                            <img src="image1.jpeg" alt="Pokéballs">
+                            <button class="zoom-btn" onclick="openLightbox('image1.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Mise en scène studio minimaliste, travail précis sur les reflets et l'éclairage bleuté.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Katana Nacré -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact III</div>
+                    <div>
+                        <h2 class="card-title">Katana Nacré</h2>
+                        <div class="card-image-box">
+                            <img src="image3.jpeg" alt="Katana" class="zoom-sword">
+                            <button class="zoom-btn" onclick="openLightbox('image3.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Modélisation terminée, affinage des shaders et rendu final validé.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coraline -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact IV</div>
+                    <div>
+                        <h2 class="card-title">Coraline</h2>
+                        <div class="card-image-box">
+                            <img src="image4.jpeg" alt="Coraline">
+                            <button class="zoom-btn" onclick="openLightbox('image4.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Inspiré du chef-d'œuvre en stop-motion, modélisation des proportions et de l'imperméable
+                        iconique[cite: 5].</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Créature -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact V</div>
+                    <div>
+                        <h2 class="card-title">Créature Vagabonde</h2>
+                        <div class="card-image-box">
+                            <img src="image5.jpeg" alt="Chat sculpté">
+                            <button class="zoom-btn" onclick="openLightbox('image5.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Sculpture organique texturée avec soin et mise en valeur par un rendu épuré.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Création Originale -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact VI</div>
+                    <div>
+                        <h2 class="card-title">Création Originale</h2>
+                        <div class="card-image-box">
+                            <img src="image6.jpeg" alt="Personnage original" class="zoom-avatar">
+                            <button class="zoom-btn" onclick="openLightbox('image6.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Personnage original tout droit sorti de mon imagination, entre bottes en cuir et chevelure
+                        sculptée.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= EN COURS ================= -->
+    <div class="category-title">— En cours —</div>
+    <div class="cards-grid">
+        <!-- Lapin Cagoulé -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact VII</div>
+                    <div>
+                        <h2 class="card-title">Lapin Cagoulé</h2>
+                        <div class="card-image-box">
+                            <img src="image7.jpeg" alt="Lapin cagoulé">
+                            <button class="zoom-btn" onclick="openLightbox('image7.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>En cours de modélisation, ajustement des proportions et des détails du character design.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PAS DE FIN ================= -->
+    <div class="category-title">— Pas de fin —</div>
+    <div class="cards-grid">
+        <!-- Épée Ornementale -->
+        <div class="card-container" onclick="handleCardClick(event, this)">
+            <div class="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Artefact VIII</div>
+                    <div>
+                        <h2 class="card-title">Épée Ornementale</h2>
+                        <div class="card-image-box">
+                            <img src="image2.jpeg" alt="Épée ornementale" class="zoom-sword">
+                            <button class="zoom-btn" onclick="openLightbox('image2.jpeg', event)">🔍 Agrandir</button>
+                        </div>
+                    </div>
+                    <div class="card-footer">Touchez pour retourner</div>
+                </div>
+                <div class="card-face card-back">
+                    <h3>Détails</h3>
+                    <p>Sublime épée de collection... mais le fichier source .blend s'est volatilisé dans le néant !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton pour accéder à la page solo de l'atelier -->
+    <div class="atelier-btn-container">
+        <a href="atelier.html" class="atelier-link-btn">Entrer dans l'Atelier ➔</a>
+    </div>
+
+    <!-- Visionneuse grand format (Lightbox) -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Zoom image">
+        <div class="close-hint">Fermer</div>
+    </div>
+
+    <script>
+        function handleCardClick(event, container) {
+            if (event.target.classList.contains('zoom-btn')) return;
+            container.classList.toggle('flipped');
+        }
+
+        function openLightbox(src, event) {
+            event.stopPropagation();
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

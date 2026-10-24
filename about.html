@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASS — À propos</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #2c080c;
+            background-image: radial-gradient(circle, #3d0c14 0%, #2c080c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Conteneur principal avec lévitation */
+        .about-card {
+            background-color: #f4efe6;
+            color: #1a1617;
+            width: 750px;
+            max-width: 100%;
+            padding: 60px 50px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            border: 2px solid #d4cfc4;
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0, 0, 0, 0.02) 15px, rgba(0, 0, 0, 0.02) 18px);
+            animation: cardEntrance 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, floatCard 6s ease-in-out infinite 1.5s;
+        }
+
+        /* Le cygne majestueux en haut à droite de la feuille */
+        .floating-swan {
+            position: absolute;
+            top: -45px;
+            right: -35px;
+            width: 120px;
+            height: auto;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.6));
+            animation: swanFloat 5s ease-in-out infinite;
+            z-index: 20;
+        }
+
+        /* Lien de retour */
+        .back-link {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #554b4d;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 30px;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .back-link:hover {
+            border-color: #554b4d;
+            letter-spacing: 3px;
+        }
+
+        /* Titre */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-style: italic;
+            font-size: 3.5rem;
+            color: #1a1617;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.7s forwards;
+        }
+
+        /* Texte du cabinet de curiosités */
+        .about-text {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #4a4042;
+            max-width: 550px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        /* Cœurs de fin */
+        .hearts {
+            color: #554b4d;
+            letter-spacing: 5px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.3s forwards, pulseHearts 3s ease-in-out infinite 2.3s;
+        }
+
+        /* --- ANIMATIONS --- */
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes floatCard {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes swanFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-3deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseHearts {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="about-card">
+        <!-- Le cygne se pose gracieusement ici -->
+        <img src="cygne.png" alt="Cygne élégant" class="floating-swan">
+
+        <a href="index.html" class="back-link">← Retour à l'accueil</a>
+
+        <h1>Mon Univers</h1>
+
+        <div class="about-text">
+            <p>Ici, pas de description académique ni de normes. Mon site est un espace purement visuel, un journal
+                intime numérique façon cabinet de curiosités qui regroupe mes projets passés, en cours ou terminés afin
+                de me pousser à aller plus loin.</p><br>
+            <p>J'espère que vous apprécierez cette expérience.</p>
+        </div>
+
+        <div class="hearts">♥♥♥</div>
+    </div>
+
+</body>
+
+</html>
